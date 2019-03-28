@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <h3>Dispensed Items</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th >Category</th>
+          <th >Description</th>
+          <th >Qty</th>
+          <th >Unit</th>
+          <th >Expiration</th>
+          <th >Dispensed Date</th>
+          <th >Recipient</th>
+          <th >Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>{{item.category}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.qty}}</td>
+          <td>{{item.unit}}</td>
+          <td>{{item.expiration}}</td>
+          <td>{{item.dispense_date}}</td>
+          <td>{{item.recipient}}</td>
+          <td>{{item.remarks}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="newPaginationContainer"></div>
+  </div>

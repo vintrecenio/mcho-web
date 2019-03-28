@@ -1,0 +1,137 @@
+<div class="container-fluid">
+  <h3>Monitoring</h3>
+  <br/>
+  <div class="row">
+  <div class="col-sm col-md-4 col-lg-4">
+    <div class="form-group">
+        <label>Recipient</label>
+        <select class="form-control" (change)="onRecipientChange($event.target.value)" #recipient>
+          <option value="0">- Select Recipient -</option>
+          <option *ngFor="let recipient of recipients" [value]="recipient.id">
+            {{recipient.name}}
+          </option>
+        </select>
+    </div>
+  </div>
+  <div class="col-sm col-md-8 col-lg-8"></div>
+  </div>
+
+  <div class="row row-adjust">
+      <div class="col-sm col-md-3 col-lg-3"></div>
+      <div class="col-sm col-md-1 col-lg-1">
+          <input type="checkbox" name="checkbox3" id="checkbox3" class="ios-toggle" (change)="onToggle(toggler.checked,recipient.value)" [checked]="ischecked"  #toggler/>
+          <label for="checkbox3" class="checkbox-label" data-off="Summary View" data-on="Detailed View"></label>
+      </div>
+      <div class="col-sm col-md-8 col-lg-8"></div>
+  </div>
+
+    <table class="table" id="table_main">
+      <thead>
+        <tr>
+          <th class="first-col">Description</th>
+          <th class="second-col">Expiration</th>
+          <th class="third-col">Remaining Stock</th>
+          <th class="fourth-col">Unit</th>
+          <th class="fifth-col">Deduct</th>
+          <th class="sixth-col">Issue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inv of invs">
+          <td class="first-col" [id]="inv.description" #tdesc>{{inv.description}}</td>
+          <td class="second-col" [id]="inv.stock" #tstock>{{inv.expiration}}</td>
+          <td class="third-col" [id]="inv.stock" #tstock>{{inv.stock}}</td>
+          <td class="fourth-col" [id]="inv.unit" #tunit>{{inv.unit}}</td>
+          <td class="fifth-col"><a href="" (click)="aClick()"><span title="Deduct Stock"><i class="glyphicon glyphicon-minus-sign" (click)="showDeductQtyModal(inv.item_id,tdesc.id, tunit.id, recipient.value)"></i></span></a></td>
+          <td class="sixth-col"><a href="" (click)="aClick()"><span title="Issue Stock Now"><i class="glyphicon glyphicon-arrow-right" (click)="showDispenseStockModal(inv.item_id, tdesc.id, tunit.id)"></i></span></a></td>
+        </tr>
+      </tbody>
+    </table>
+    <input type="file" (change)="incomingfile($event)" placeholder="Upload File" accept=".xlsx"/>
+    <div class="row-button"><button  (click)="uploadExcel()" class="btn btn-success">Proceed Upload</button></div>
+  </div>
+
+  <div id="modalDispenseStock" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dispense">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Dispense Stock</h4>
+              <h5 class="modal-title modal-sub-header" id="subheader_stock"></h5>
+            </div>
+          <div class="modal-body">
+          <input type="hidden" id="item_id" #itemid/>
+          <div class="row">
+              <div class="col-sm col-md-12 col-lg-12">
+                  <div class="form-group">
+                    <select class="form-control" autofocus (change)="onChangeExpiration($event.target.value)" #expiry>
+                      <option value="0">- Select Expiration -</option>
+                      <option *ngFor="let expiration of expirations" [value]="expiration.id">
+                        {{expiration.expiration}}
+                      </option>
+                    </select>
+                    <span class="exp-stock" id="exp_stock"></span>
+                  </div>
+              </div>
+              <div class="col-sm col-md-12 col-lg-12">
+                <div class="form-group">
+                    <label>Qty</label>
+                  <input type="text" class="form-control input-center" placeholder="" id="qty" #qty autofocus/>
+                </div>
+              </div>
+              <div class="col-sm col-md-12 col-lg-12">
+              <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control" #remarks></textarea>
+              <!-- <input type="text" class="form-control" placeholder="" formControlName="remarks_add"/> -->
+              </div>
+             </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" (click)="saveDispense(itemid.value, recipient.value, remarks.value, qty.value, expiry.value)">Proceed</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+  
+<div id="modalDeductStock" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dispense">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Deduct Stock</h4>
+              <h5 class="modal-title modal-sub-header" id="subheader_deduct"></h5>
+            </div>
+          <div class="modal-body">
+          <input type="hidden" id="item_id_deduct" #itemiddeduct/>
+          <div class="row">
+
+              <div class="col-sm col-md-12 col-lg-12">
+                <div class="form-group">
+                    <label>Qty</label>
+                  <input type="text" class="form-control input-center" placeholder="" id="qty_deduct" #qtydeduct autofocus/>
+                </div>
+              </div>
+
+              <div class="col-sm col-md-12 col-lg-12">
+                  <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea class="form-control" #remarksdeduct></textarea>
+                  <!-- <input type="text" class="form-control" placeholder="" formControlName="remarks_add"/> -->
+                  </div>
+              </div>
+
+          </div>
+
+          </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" (click)="saveDeduction(itemiddeduct.value, recipient.value, qtydeduct.value, remarksdeduct.value)">Proceed</button>
+        </div>
+      </div>
+    </div>
+</div>

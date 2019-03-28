@@ -1,0 +1,8 @@
+div.highcharts-container {
+    width: 100% !important;
+}
+
+.container, #chart{
+    width: 100% !important; 
+    overflow: hidden !important;
+}

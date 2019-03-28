@@ -1,1 +1,273 @@
-/* You can add global styles to this file, and also import other style files */
+/* @import "~angular-notifier/styles.css"; */
+
+.btn-default{
+    border-radius: 2px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.btn-default:hover{
+    background-color: #3a4a4d;
+    color: #fff;
+    border-color: transparent;
+    border-radius: 2px;
+}
+.btn-secondary{
+    border-radius: 2px;
+    border-color:transparent;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active{
+    color: #0095a8be !important;
+    border-color: transparent;
+    border-radius: 2px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.btn-success{
+    border-radius: 2px;
+    border-color:transparent;
+    background: rgba(0, 149, 168, 0.747);
+    outline: none !important;
+    box-shadow: none !important;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active{
+    background-color: rgba(1, 113, 128, 0.747) !important;
+    color: #fff;
+    border-color: transparent;
+    border-radius: 2px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.row-button{
+    text-align: right;
+}
+
+.table td { padding: 5px !important; }
+
+.form-control{
+    border-radius: 0.5px;  
+    font-weight: normal;
+}
+
+.form-control:focus {
+    border-color: rgba(0, 149, 168, 0.747);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 149, 168, 0.747);
+}
+
+textarea { resize: vertical; }
+
+
+/* Progress Bar */
+.progress {
+    position: relative;
+    height: 4px;
+    display: block;
+    width: 100%;
+    background-color: #05acc2be;
+    border-radius: 0px;
+    background-clip: padding-box;
+    margin: 0;
+    overflow: hidden; 
+}
+.progress .indeterminate {
+    background-color: #006e7cbe; 
+}
+.progress .indeterminate:before {
+    content: '';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite; 
+}
+.progress .indeterminate:after {
+    content: '';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+            animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    -webkit-animation-delay: 1.15s;
+            animation-delay: 1.15s; 
+}
+
+@-webkit-keyframes indeterminate {
+0% {
+    left: -35%;
+    right: 100%; }
+60% {
+    left: 100%;
+    right: -90%; }
+100% {
+    left: 100%;
+    right: -90%; } }
+@keyframes indeterminate {
+0% {
+    left: -35%;
+    right: 100%; }
+60% {
+    left: 100%;
+    right: -90%; }
+100% {
+    left: 100%;
+    right: -90%; } }
+@-webkit-keyframes indeterminate-short {
+0% {
+    left: -200%;
+    right: 100%; }
+60% {
+    left: 107%;
+    right: -8%; }
+100% {
+    left: 107%;
+    right: -8%; } }
+@keyframes indeterminate-short {
+0% {
+    left: -200%;
+    right: 100%; }
+60% {
+    left: 107%;
+    right: -8%; }
+100% {
+    left: 107%;
+    right: -8%; } }
+
+.dataTables_filter, .dataTables_paginate, .paging_simple_numbers{
+    text-align: right;
+}
+
+.dataTables_scrollHeadInner{
+    width: 100% !important;
+}
+
+.dataTables_scrollFootInner{
+    width: 100% !important;
+}
+
+.no-footer{
+    width: 100% !important;
+}
+
+.dataTable{
+    width: 100% !important;
+}
+
+.pagination>.active>span:hover{
+    z-index:3;
+    color:#000;
+    cursor:default;
+    background-color:#c2c2c2be;}
+
+.pagination > li > a, .pagination > li > span{
+    color: #fff;
+    background-color:#c2c2c2be;
+}
+.pagination > li.active > a, .pagination > li.active > span{
+    color: #fff;
+    background-color: #006e7cbe;
+}
+.paginate_button>.active{
+    background-color: #006e7cbe;
+}
+
+.paginate_button>.active:focus{
+    background-color: #006e7cbe;
+}
+
+
+.sorting_disabled{
+    text-align: left !important;
+}
+
+div.completer-holder{
+    line-height: 1.5 !important;
+    border-color: transparent !important;
+}
+
+/* .completer-input{
+    border-radius: 0.5px;  
+    font-weight: normal;
+    padding-left: 10px !important;
+    width: 100% !important;
+}
+
+.completer-input {
+    border-color: rgba(0, 149, 168, 0.747) !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 149, 168, 0.747) !important;
+}
+
+.completer-input.ng-touched {
+    border-color: rgba(0, 149, 168, 0.747) !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 149, 168, 0.747) !important;
+} */
+
+.completer-dropdown {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 200px;
+}
+
+.completer-dropdown-holder{
+    padding-bottom: 5px;
+} 
+.modal.fade .modal-dialog 
+{
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -o-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+}
+
+.modal-sub-header{
+    color:  #047d8d;
+    font-weight: normal;
+    margin-top: 7px;
+}
+
+.ngx-datepicker-container, .ngx-datepicker-input { z-index: inherit !important; width: 100% !important;}
+.ngx-datepicker-calendar-container { z-index: 999; }
+
+.ngx-datepicker-input:focus{
+    border-color: rgba(0, 149, 168, 0.747);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(0, 149, 168, 0.747);
+}
+
+.paleredClass{
+    background-color: rgb(252, 212, 212);
+}
+.redClass{
+    color: #fff;
+    background-color: rgb(253, 67, 67);
+}
+
+#stats{
+    width: 100%;
+}
+.error{
+    margin: auto;
+    font-size: 0.9em;
+    color: rgb(229, 35, 37);
+}
+.input-error{
+    border-color: rgb(229, 35, 37);
+    box-shadow: none;
+}
+span.exp-stock{
+    color: rgb(229, 35, 37);
+    margin-top: 0;
+    font-size: 0.9em;
+}

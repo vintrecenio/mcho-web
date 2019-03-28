@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <h3>Audit Trail</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="first-col">Action</th>
+          <th class="second-col">User</th>
+          <th class="third-col">Date/Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trail of trails">
+          <td>{{trail.action}}</td>
+          <td>{{trail.name}}</td>
+          <td>{{trail.timestamp}}</td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+          <tr>
+              <th>Action</th>
+              <th>User</th>
+              <th>Date/Time</th>
+          </tr>
+      </tfoot>
+    </table>
+  </div>

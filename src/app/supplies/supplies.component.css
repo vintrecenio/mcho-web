@@ -1,0 +1,56 @@
+.row_add{
+    text-align: center;
+}
+.col-center{
+   text-align: center; 
+}
+
+a{
+    color: #017b8bbe;
+}
+
+.first-col{
+    width: 44%;
+}
+.second-col{
+    width: 25%;
+}
+.third-col{
+    width: 15%;
+}
+.fourth-col{
+    width: 10%;
+}
+.action-col{
+    width: 2%;
+    text-align: center; 
+}
+table{
+    width: 100%;
+}
+tfoot{
+    text-align: left;
+}
+tfoot{
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.first-foot-col{
+    width: 44%;
+}
+.second-foot-col{
+    width: 25%;
+}
+.third-foot-col{
+    width: 15%;
+}
+.fourth-foot-col{
+    width: 10%;
+}
+.action-foot-col{
+    width: 2%;
+    text-align: center; 
+}
+

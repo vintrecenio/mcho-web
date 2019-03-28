@@ -1,0 +1,331 @@
+<div class="container-fluid">
+  <h3>Inventory</h3>
+
+  <div class="row">
+    <div class="col-sm col-md-4 col-lg-4">
+      <div class="form-group">
+          <label>Category</label>
+          <select class="form-control" (change)="updateInventory($event.target.value)" #categorya>
+            <option value="0">All</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{category.cat_name}}
+            </option>
+          </select>
+      </div>
+    </div>
+    <div class="col-sm col-md-8 col-lg-8"></div>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="first-col">Description</th>
+          <th class="second-col">Category</th>
+          <th class="third-col">Stock</th>
+          <th class="fourth-col">Unit</th>
+          <th class="action-col"></th>
+          <th class="action-col"></th>
+          <th class="action-col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inventory of inventories">
+          <td class="first-col" [id]="inventory.description" #tdesc>{{inventory.description}}</td>
+          <td class="second-col">{{inventory.cat_name}}</td>
+          <td class="third-col" [id]="inventory.stock" #tstock>{{inventory.stock}}</td>
+          <td class="fourth-col" [id]="inventory.name" #tunit>{{inventory.name}}</td>
+          <td class="col-center"><a href="" (click)="aClick()"><span title="Edit"><i class="glyphicon glyphicon-pencil" (click)="showEditModal(inventory.item, tdesc.id)"></i></span></a></td>
+          <td class="col-center"><a href="" (click)="aClick()"><span title="Add Stock"><i class="glyphicon glyphicon-plus" (click)="showAddQtyModal(inventory.item, tdesc.id, tstock.id, tunit.id)"></i></span></a></td>
+          <td class="col-center"><a href="" (click)="aClick()"><span title="Dispense Stock"><i class="glyphicon glyphicon-arrow-right" (click)="showDispenseQtyModal(inventory.item, tdesc.id, tstock.id, tunit.id)"></i></span></a></td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+          <tr>
+              <th class="first-foot-col">Description</th>
+              <th class="second-foot-col">Category</th>
+              <th class="third-foot-col">Stock</th>
+              <th class="fourth-foot-col">Unit</th>
+              <th class="action-foot-col"></th>
+              <th class="action-foot-col"></th>
+              <th class="action-foot-col"></th>
+          </tr>
+      </tfoot>
+    </table>
+    <div class="row-button"><button class="btn btn-success" (click)="showAddSupplyModal(categorya.value)">Add New</button></div>
+  </div>
+
+  <div id="modalEditSupply" class="modal fade" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Supply Info</h4>
+              </div>
+            <div class="modal-body">
+            <input type="hidden" id="supply_edit_id" #seid/>
+            <div class="row">
+                <div class="col-sm col-md-12 col-lg-12">
+                  <div class="alert alert-danger"><b>Note:</b><br/>You can only edit the item description. Other info of this item will remain intact.</div>
+                  <div class="form-group">
+                      <label>Item</label>
+                    <input type="text" class="form-control" placeholder="" id="description_edit" #sdesc autofocus/>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success" (click)="saveSupplyInfo(seid.value, sdesc.value)">Save Changes</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div id="modalAddSupply" class="modal fade" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup] = "addsupplyForm" (ngSubmit) = "saveSupply()">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addnew_title"></h4>
+                <div class="row" *ngIf="categorya.value == 0">
+                    <div class="col-sm col-md-4 col-lg-4">
+                      <div class="form-group">
+                          <select class="form-control" (change)="onCategorySelect($event.target.value)">
+                            <option value="0">- Select Category -</option>
+                            <option *ngFor="let category of categories" [value]="category.id">
+                              {{category.cat_name}}
+                            </option>
+                          </select>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            <div class="modal-body">
+        
+              <div class="row">
+                <div class="col-sm col-md-6 col-lg-6">
+                  <div class="form-group">
+                      <label>Date Received</label>
+                      <ng-datepicker [options]="options_received" formControlName="date_received"></ng-datepicker>
+                  </div>
+                </div>
+                <div class="col-sm col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label>Supplier</label>
+                    <select class="form-control" formControlName="supplier">
+                      <option value="0">- Select Supplier -</option>
+                      <option *ngFor="let supplier of suppliers" [value]="supplier.id">
+                        {{supplier.name}}
+                      </option>
+                    </select>
+                </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm col-md-6 col-lg-6">
+                  <div class="form-group">
+                      <label>Item</label> 
+                      <!-- <ng2-completer [inputClass]="['form-control']" [datasource]="dataService" [minSearchLength]="1" placeholder="Type item here..." formControlName="description"></ng2-completer> -->
+                      <ng2-completer (selected)="onItemSelect($event)" [inputClass]="['form-control']" [datasource]="dataService" [minSearchLength]="1" placeholder="Type item here..." formControlName="description"></ng2-completer>
+                    <!-- <input type="text" class="form-control" placeholder="Specify measurements, etc..." formControlName="description"/> -->
+                  </div>
+                </div>
+                <div class="col-sm col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label>Expiration (if applicable)</label>
+                    <ng-datepicker [options]="options_expiry" formControlName="expiry"></ng-datepicker>
+                </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <input class="form-control" placeholder="Qty" formControlName="qty">
+                  </div>
+                </div>
+
+                <div class="col-sm col-md-6 col-lg-6">
+                  <div class="form-group">
+                      <select class="form-control" formControlName="unit">
+                          <option value="0">- Select Unit -</option>
+                          <option *ngFor="let unit of units" [value]="unit.id">
+                            {{unit.name}}
+                          </option>
+                        </select>
+                  </div>
+                </div>
+
+              </div>
+          </div>
+          <div class="modal-footer">
+              <div id="result_msg"></div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save Changes</button>
+          </div>
+        </form>
+        </div>
+      </div>
+  </div>
+
+  <div id="modalAddQty" class="modal fade" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup] = "addqtyForm" (ngSubmit) = "saveSupplyQty(sid.value)">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Stock</h4>
+                <div class="row">
+                  <div class="col-sm col-md-6 col-lg-6">
+                    <h5 class="modal-title modal-sub-header" id="subheader_newstock"></h5>
+                  </div>
+                  <div class="col-sm col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <select class="form-control" formControlName="expiry_add" autofocus>
+                      <option value="0">- Select Expiration -</option>
+                      <option *ngFor="let expiration of expirations" [value]="expiration.id">
+                        {{expiration.expiration}}
+                      </option>
+                    </select>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            <div class="modal-body">
+            <input type="hidden" id="supply_id" #sid/>
+            
+                <div class="row">
+
+                  <div class="col-sm col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label>Date Received</label>
+                            <ng-datepicker [options]="options_received" formControlName="date_received_add"></ng-datepicker>
+                        </div>
+                  </div>
+
+                  <div class="col-sm col-md-6 col-lg-6">
+                  <div class="form-group">
+                      <label>Supplier</label>
+                      <select class="form-control" formControlName="supplier_add">
+                        <option value="0">- Select Supplier -</option>
+                        <option *ngFor="let supplier of suppliers" [value]="supplier.id">
+                          {{supplier.name}}
+                        </option>
+                      </select>
+                  </div>
+                  </div>
+
+                  <div class="col-sm col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Quantity</label>
+                      <input type="text" class="form-control" placeholder="" formControlName="qty_add"/>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control" formControlName="remarks_add"></textarea>
+                          <!-- <input type="text" class="form-control" placeholder="" formControlName="remarks_add"/> -->
+                        </div>
+                    </div>
+
+                </div>
+            
+            <!-- <p>Content goes here...</p> -->
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save Changes</button>
+          </div>
+          </form>
+        </div>
+      </div>
+  </div>
+
+  <div id="modalDispenseQty" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <form [formGroup] = "dispenseqtyForm" (ngSubmit) = "saveDispenseQty(did.value)">
+          <div class="modal-header">
+              <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Dispense Stock</h4>
+              <div class="row">
+                  <div class="col-sm col-md-6 col-lg-6">
+                    <h5 class="modal-title modal-sub-header" id="subheader_dispense"></h5>
+                  </div>
+                  <div class="col-sm col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <select class="form-control" formControlName="expiry_dispense" autofocus (change)="onChangeExpiration($event.target.value)">
+                      <option value="0">- Select Expiration -</option>
+                      <option *ngFor="let expiration of expirations" [value]="expiration.id">
+                        {{expiration.expiration}}
+                      </option>
+                    </select>
+                    <span class="exp-stock" id="exp_stock"></span>
+                  </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-body">
+          <input type="hidden" id="dispense_id" #did/>
+          
+              <div class="row">
+
+                <div class="col-sm col-md-4 col-lg-4">
+                      <div class="form-group">
+                          <label>Date Dispensed</label>
+                          <ng-datepicker [options]="options_received" formControlName="date_dispense"></ng-datepicker>
+                      </div>
+                </div>
+
+                <div class="col-sm col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label>Recipient</label>
+                    <select class="form-control" formControlName="recipient_dispense">
+                      <option value="0">- Select Recipient -</option>
+                      <option *ngFor="let recipient of recipients" [value]="recipient.id">
+                        {{recipient.name}}
+                      </option>
+                    </select>
+                </div>
+                </div>
+
+                <div class="col-sm col-md-2 col-lg-2">
+                  <div class="form-group">
+                      <label>Quantity</label>
+                    <input type="text" class="form-control" placeholder="" formControlName="qty_dispense"/>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                  <div class="col-sm col-md-12 col-lg-12">
+                      <div class="form-group">
+                          <label>Remarks</label>
+                          <textarea class="form-control" formControlName="remarks_dispense"></textarea>
+                        <!-- <input type="text" class="form-control" placeholder="" formControlName="remarks_dispense"/> -->
+                      </div>
+                  </div>
+
+              </div>
+          
+          <!-- <p>Content goes here...</p> -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+
+<!-- <div class="progress" *ngIf="loading">
+    <div class="indeterminate"></div>
+</div> -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <div class="avatar-wrapper">
+            <img width="80" alt="avatar" src="./assets/mcho-logo.png" (click)="validateAuth()">
+          </div>
+            <li *ngFor="let item of items">
+                <a [routerLink]="item.link">{{item.title}}</a>
+            </li>
+            <!-- Menu with submenus -->
+            <li>
+                <a href="" (click)="aClick()" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Transactions</a>
+                <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
+                  <li><a [routerLink]="['/home', {outlets: {'content': ['incoming']}}]">Received Items</a></li>
+                  <li><a [routerLink]="['/home', {outlets: {'content': ['outgoing']}}]">Dispensed Items</a></li>
+                  <li><a [routerLink]="['/home', {outlets: {'content': ['deduction']}}]">Deducted Items</a></li>
+                </ul>
+            </li>
+            <li>
+                <a [routerLink]="['/home', {outlets: {'content': ['statistics']}}]">Statistics</a>
+            </li>
+
+            <!-- <li>
+                <a [routerLink]="['/home', {outlets: {'content': ['accounts']}}]">Account</a>
+            </li> -->
+
+        </ul>
+        <!-- <div class="sidebar-footer">&#169; Marikina City Health Office</div> -->
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- <a [routerLink]=""><img (click)="toggleMenu()" src="./assets/menu-button.png" width="20"/></a> -->
+                    <div (click)="toggleMenu()" class="hamburger hamburger--squeeze is-active">
+                        <span class="hamburger-box">
+                          <span class="hamburger-inner"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-6 exit">
+                    <a [routerLink]=""><img (click)="openLogoutModal()" src="./assets/logout.png" width="20"/></a>
+                </div>
+                <div class="col-lg-12">
+                    <!-- This is where routing happens -->
+                    <div [@routeState]="getAnimationData(routerOutlet)">
+                        <router-outlet name="content" #routerOutlet="outlet"></router-outlet>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+<div id="modalConfirmLogout" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog logout-modal">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Logout</h4>
+            </div>
+          <div class="modal-body logout-modal-body">
+          <input type="hidden" id="supply_edit_id" #seid/>
+          <div class="row">
+            <h4>Continue to log out?</h4>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-success" (click)="logOut()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>

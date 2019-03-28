@@ -1,0 +1,39 @@
+<div class="container-fluid">
+<h3>Statistics</h3>
+<div class="row">
+<form [formGroup] = "complianceForm">
+<div class="col-sm col-md-4 col-lg-4">
+    <div class="form-group">
+        <label>Item</label>
+        <select class="form-control" formControlName="selectItem" (change)="loadDailyDispense($event.target.value, month.value, year.value)" #item>
+            <option value="0">- Select Item -</option>
+            <option *ngFor="let item of items" [value]="item.id">
+            {{item.description}}
+        </option>
+        </select>
+    </div>
+</div>
+<div class="col-sm col-md-4 col-lg-4">
+        <div class="form-group">
+            <label>Month</label>
+            <select class="form-control" formControlName="selectMonth" (change)="loadDailyDispense(item.value, $event.target.value, year.value)" #month>
+            <option *ngFor="let month of months" [value]="month.id">
+                {{month.name}}
+            </option>
+            </select>
+        </div>
+</div>
+<div class="col-sm col-md-4 col-lg-4">
+        <div class="form-group">
+            <label>Year</label>
+            <select class="form-control" formControlName="selectYear" (change)="loadDailyDispense(item.value, month.value, $event.target.value)" #year>
+            <option *ngFor="let year of years" [value]="year.name">
+                {{year.name}}
+            </option>
+            </select>
+        </div>
+</div>
+</form>
+<!-- Render chart here -->
+<div id="chart"></div>
+</div>
